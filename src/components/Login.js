@@ -14,7 +14,7 @@ class Login extends Component {
     handleLogin = (event) => {
         event.preventDefault();
         const { email, password } = this.state;
-        const fieldsToValidate = [{email}, [password]];
+        const fieldsToValidate = [{ email }, { password }];
 
         const allFieldsEntered = validateFields(fieldsToValidate);
         if (!allFieldsEntered) {
@@ -42,25 +42,26 @@ class Login extends Component {
     };
 
     render() {
-        const { errorMsg } = this.setState;
+        const { errorMsg } = this.state;
         return (
             <div className="login-page">
                 <h1>Banking Application</h1>
                 <div className="login-form">
-                    <Form onSubmit={this.handleLogin} />
-                    {errorMsg && errorMsg.signing_error && (<p className="errorMsg centered-message">{errorMsg.signing_error}</p>)}
-                    <Form.Group controlId="email">
-                        <Form.Label>Email address</Form.Label>
-                        <Form.Control type="email" name="email" placeholder="Enter email" onChange={this.handleInputChange} />
-                    </Form.Group>
-                    <Form.Group controlId="password">
-                        <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" name="password" placeholder="Enter password" onChange={this.handleInputChange} />
-                    </Form.Group>
-                    <div className="action-items">
-                        <Button variant="primary" type="submit">Login</Button>
-                        <Link to="/register" className="btn btn-secondary">Create account</Link>
-                    </div>
+                    <Form onSubmit={this.handleLogin}>
+                        {errorMsg && errorMsg.signing_error && (<p className="errorMsg centered-message">{errorMsg.signing_error}</p>)}
+                        <Form.Group controlId="email">
+                            <Form.Label>Email address</Form.Label>
+                            <Form.Control type="email" name="email" placeholder="Enter email" onChange={this.handleInputChange} />
+                        </Form.Group>
+                        <Form.Group controlId="password">
+                            <Form.Label>Password</Form.Label>
+                            <Form.Control type="password" name="password" placeholder="Enter password" onChange={this.handleInputChange} />
+                        </Form.Group>
+                        <div className="action-items">
+                            <Button variant="primary" type="submit">Login</Button>
+                            <Link to="/register" className="btn btn-secondary">Create account</Link>
+                        </div>
+                    </Form>
                 </div>
             </div>
         );

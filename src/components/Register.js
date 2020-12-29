@@ -32,14 +32,14 @@ class Register extends Component {
         if (!allFieldsEntered) {
             this.setState({
                 errorMsg: {
-                    signing_error: 'Please enter all fields.'
+                    signup_error: 'Please enter all fields.'
                 }
             });
         } else {
             if (password !== cpassword) {
                 this.setState({
                     errorMsg: {
-                        signing_error: 'Password and confirm password does not match.'
+                        signup_error: 'Password and confirm password does not match.'
                     }
                 });
             } else {
@@ -56,14 +56,14 @@ class Register extends Component {
     };
 
     render() {
-        const { errorMsg, successMsg, isSubmitted } = this.setState;
+        const { errorMsg, successMsg, isSubmitted } = this.state;
         return (
             <div className="login-page">
                 <h2>Register User</h2>
                 <div className="login-form">
-                    <Form onScroll={this.registerUser}>
-                        {errorMsg && errorMsg.signing_error ?
-                            (<p className="errorMsg centered-message">{errorMsg.signing_error}</p>) :
+                    <Form onSubmit={this.registerUser}>
+                        {errorMsg && errorMsg.signup_error ?
+                            (<p className="errorMsg centered-message">{errorMsg.signup_error}</p>) :
                             (isSubmitted && (<p className="successMsg centered-message">{successMsg}</p>))
                         }
                         <Form.Group controlId="first_name">
@@ -71,7 +71,7 @@ class Register extends Component {
                             <Form.Control type="text" name="first_name" placeholder="Enter first name" onChange={this.handleInputChange} />
                         </Form.Group>
                         <Form.Group controlId="last_name">
-                            <Form.Label>Enter Last Name</Form.Label>
+                            <Form.Label>Enter last name</Form.Label>
                             <Form.Control type="text" name="last_name" placeholder="Enter last name" onChange={this.handleInputChange} />
                         </Form.Group>
                         <Form.Group controlId="email">
