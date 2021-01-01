@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Form, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import _ from 'lodash';
+import { Form, Button } from 'react-bootstrap';
 import { validateFields } from '../utils/common';
+import { initiateLogin } from '../actions/auth';
+import { resetErrors } from '../actions/errors';
 
 class Login extends Component {
     state = {
@@ -10,6 +13,18 @@ class Login extends Component {
         password: '',
         errorMsg: ''
     };
+
+    componentDidUpdate(prevProps) {
+        if (!_.isEqual(prevProps.errors, this.props.errors)) {
+            this.setState({
+                errorMsg: this.props.errors
+            });
+        }
+    }
+
+    componentWillUnmount() {
+        this.props.dispatch(resetErrors());
+    }
 
     handleLogin = (event) => {
         event.preventDefault();
@@ -20,16 +35,17 @@ class Login extends Component {
         if (!allFieldsEntered) {
             this.setState({
                 errorMsg: {
-                    signing_error: 'Please enter all fields.'
+                    signin_error: 'Please enter all fields.'
                 }
             });
         } else {
             this.setState({
                 errorMsg: {
-                    signing_error: ''
+                    signin_error: ''
                 }
             });
             // login successful
+            this.props.dispatch(initiateLogin(email, password));
         }
     };
 
@@ -48,7 +64,7 @@ class Login extends Component {
                 <h1>Banking Application</h1>
                 <div className="login-form">
                     <Form onSubmit={this.handleLogin}>
-                        {errorMsg && errorMsg.signing_error && (<p className="errorMsg centered-message">{errorMsg.signing_error}</p>)}
+                        {errorMsg && errorMsg.signin_error && (<p className="errorMsg centered-message">{errorMsg.signin_error}</p>)}
                         <Form.Group controlId="email">
                             <Form.Label>Email address</Form.Label>
                             <Form.Control type="email" name="email" placeholder="Enter email" onChange={this.handleInputChange} />
@@ -68,4 +84,6 @@ class Login extends Component {
     }
 }
 
-export default connect()(Login);
+const mapStateToProps = (state) => ({ errors: state.errors });
+
+export default connect(mapStateToProps)(Login);

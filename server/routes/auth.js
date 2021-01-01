@@ -13,14 +13,14 @@ const Router = express.Router();
 Router.post('/signup', async (req, res) => {
     try {
         const { first_name, last_name, email, password } = req.body;
-        const validFieldsToUpdate ={
-            first_name,
-            last_name,
-            email,
-            password
-        };
+        const validFieldsToUpdate = [
+            'first_name',
+            'last_name',
+            'email',
+            'password'
+        ];
         const receivedFields = Object.keys(req.body);
-
+        
         const isInvalidFieldProvided = isInvalidField(
             receivedFields,
             validFieldsToUpdate
@@ -79,7 +79,7 @@ Router.post('/signin', async (req, res) => {
         res.send(user);
     } catch (error) {
         res.status(400).send({
-            signup_error: 'Email/password does not match.'
+            signin_error: 'Email/password does not match.'
         });
     }
 });

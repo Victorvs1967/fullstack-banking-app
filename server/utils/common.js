@@ -3,7 +3,9 @@ const jwt = require('jsonwebtoken');
 const { pool } = require('../db/connect');
 
 const isInvalidField = (receivedFields, validFieldsToUpdate) => {
-    return receivedFields.some((field) => validFieldsToUpdate.indexOf(field) === -1);
+    return receivedFields.some(
+        (field) => validFieldsToUpdate.indexOf(field) === -1
+    );
 };
 
 const validateUser = async (email, password) => {
