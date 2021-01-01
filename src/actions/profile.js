@@ -1,5 +1,6 @@
 import { BASE_API_URL, UPDATE_PROFILE } from '../utils/constatnts';
 import { getErrors } from './errors';
+import { setAuthHeader } from '../utils/common';
 import { get, post } from '../utils/api';
 
 export const updateProfile = (profile) => ({
@@ -10,6 +11,7 @@ export const updateProfile = (profile) => ({
 export const initiateUpdateProfile = (profileData) => {
     return async (dispatch) => {
         try {
+            setAuthHeader();
             const profile = await post(`${BASE_API_URL}/profile`, profileData);
             dispatch(updateProfile(profile.data));
         } catch (error) {
@@ -18,7 +20,7 @@ export const initiateUpdateProfile = (profileData) => {
     };
 };
 
-export const itnitiateGetProfile = (email) => {
+export const itnitiateGetProfile = () => {
     return async (dispatch) => {
         try {
             const profile = await get(`${BASE_API_URL}/profile`);

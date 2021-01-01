@@ -1,7 +1,9 @@
 import axios from 'axios';
 import { history } from '../router/AppRouter';
-import { SIGN_IN, BASE_API_URL } from '../utils/constatnts';
+import { BASE_API_URL, SIGN_IN, SIGN_OUT } from '../utils/constatnts';
+import { itnitiateGetProfile } from '../actions/profile';
 import { getErrors } from './errors';
+import { post } from '../utils/api';
 
 export const signIn = (user) => ({
     type: SIGN_IN,
@@ -15,6 +17,7 @@ export const initiateLogin = (email, password) => {
             const user = result.data;
             localStorage.setItem('user_token', user.token);
             dispatch(signIn(user));
+            dispatch(itnitiateGetProfile(user.email));
             history.push('/profile');
         } catch (error) {
             console.log(error);
@@ -32,6 +35,22 @@ export const registerNewUser = (data) => {
             console.log('error', error);
             error.response && dispatch(getErrors(error.response.data));
             return { success: false };
+        }
+    };
+};
+
+export const signOut = () => ({
+    type: SIGN_OUT
+});
+
+export const initiateLogout = () => {
+    return async (dispatch) => {
+        try {
+            await post(`${BASE_API_URL}/logout`, true, true);
+            localStorage.removeItem('user_token');
+            return dispatch(signOut());
+        } catch (error) {
+            error.response && dispatch(getErrors(error.response.data));
         }
     };
 };
