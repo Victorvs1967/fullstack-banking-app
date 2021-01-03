@@ -49,10 +49,10 @@ Router.post('/account', authMiddleware, async (req, res) => {
     const { account_no, bank_name, ifsc } = req.body;
     try {
         await pool.query(
-            'insert into account(account_no, bank_name, ifsc, userid)',
+            'insert into account(account_no, bank_name, ifsc, userid) values($1, $2, $3, $4)',
             [account_no, bank_name, ifsc, req.user.userid]
         );
-        res.status(201).SEND();
+        res.status(201).send();
     } catch (error) {
         res.send({
             add_error: 'Error while adding new account..Try again later.'

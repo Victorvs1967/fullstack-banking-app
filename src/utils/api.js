@@ -42,7 +42,7 @@ export const patch = async (
     if (shouldSetAuthHeader) {
         setAuthHeader();
     }
-    const result = await patch(url, params);
+    const result = await axios.patch(url, params);
     if (shouldRemoveAuthHeader) {
         removeAuthHeader();
     }

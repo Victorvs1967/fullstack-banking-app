@@ -5,10 +5,10 @@ import { Button, Form } from 'react-bootstrap';
 import { validateFields } from '../utils/common';
 import { resetErrors } from '../actions/errors';
 import { maskNumber } from '../utils/mask';
-// import { 
-//     initiateWithdrawAmount,
-//     initiateDepositAmount
-// } from '../actions/transactions';
+import { 
+    initiateWithdrawAmount,
+    initiateDepositAmount
+} from '../actions/transactions';
 import { 
     initiateGetAccntDetails,
     initiateAddAccntDetails,
@@ -83,10 +83,10 @@ class AccountForm extends Component {
             amount += amount;
             total_balance += total_balance;
             if (selectedType === 'withdraw' && amount <= total_balance) {
-                // this.props.dispatch(initiateWithdrawAmount(account.account_id, amount));
+                this.props.dispatch(initiateWithdrawAmount(account.account_id, amount));
                 this.setState({ errorMsg: '' });
             } else if (selectedType === 'deposit') {
-                // this.props.dispatch(initiateDepositAmount(account.account_id, amount));
+                this.props.dispatch(initiateDepositAmount(account.account_id, amount));
                 this.setState({ errorMsg: '' })
             } else {
                 this.setState({
@@ -125,7 +125,7 @@ class AccountForm extends Component {
                     </h3>
                     <hr/>
                     <Form>
-                        {errorMsg && errorMsg.update_error (
+                        {errorMsg && errorMsg.update_error && (
                             <p className="errorMsg">{errorMsg.update_error}</p>
                         )}
                         <Form.Group controlId="acc_no">
