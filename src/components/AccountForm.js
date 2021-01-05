@@ -25,6 +25,13 @@ class AccountForm extends Component {
         errorMsg: ''
     };
 
+    componentDidMount() {
+        const { email } = this.props;
+        if (email) {
+            this.props.dispatch(initiateGetAccntDetails());
+        }
+    }
+
     componentWillUnmount() {
         this.props.dispatch(resetErrors());
     }
@@ -71,17 +78,18 @@ class AccountForm extends Component {
 
         const { selectedType } = this.props;
         const fieldsToValidate = [{ amount }];
+
         const allFieldsEntered = validateFields(fieldsToValidate);
         if (!allFieldsEntered) {
             this.setState({
                 errorMsg: { 
                     [selectedType === 'withdraw' ? 'withdraw_error' : 'add_error']: 'Please enter an amount.'
                 }
-            })
+            });
         } else {
             let { total_balance } = account;
-            amount += amount;
-            total_balance += total_balance;
+            amount = +amount;
+            total_balance = +total_balance;
             if (selectedType === 'withdraw' && amount <= total_balance) {
                 this.props.dispatch(initiateWithdrawAmount(account.account_id, amount));
                 this.setState({ errorMsg: '' });

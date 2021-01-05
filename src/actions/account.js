@@ -1,10 +1,14 @@
-import { BASE_API_URL, SET_ACCOUNT, UPDATE_ACCOUNT } from '../utils/constatnts';
+import { BASE_API_URL, RESET_ACCOUNT, SET_ACCOUNT, UPDATE_ACCOUNT } from '../utils/constatnts';
 import { getErrors } from './errors';
 import { get, post, patch } from '../utils/api';
 
 export const setAccount = (accountDetails) => ({
     type: SET_ACCOUNT,
     accountDetails
+});
+
+export const resetAccount = () => ({
+    type: RESET_ACCOUNT
 });
 
 export const updateAccountBalance = (amountToChange, operation) => ({
