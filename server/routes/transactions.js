@@ -95,7 +95,7 @@ Router.get('/download/:id', authMiddleware, async (req, res) => {
     try {
         const { start_date, end_date } = req.query;
         const account_id = req.params.id;
-        const result = await initiateGetTransactions(account_id, start_date, end_date);
+        const result = await getTransactions(account_id, start_date, end_date);
         const basePath = path.join(__dirname, '..', 'views');
         const templatePath = path.join(basePath, 'transactions.ejs');
         const templateString = ejs.fileLoader(templatePath, 'utf-8');

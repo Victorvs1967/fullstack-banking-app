@@ -42,7 +42,7 @@ const getTransactions = async (account_id, start_date, end_date) => {
     try {
         if (start_date && end_date) {
             result = await pool.query(
-                "select to_char(transaction_date, 'YYYY-MM-DD') as formatted_date, withdraw_amount, deposit_amount, balance from transactions account_id=$1 and to_char(transaction_date, 'YYYY-MM-DD') between $2 and $3 order by transaction_date desc",
+                "select to_char(transaction_date, 'YYYY-MM-DD') as formatted_date,withdraw_amount,deposit_amount,balance from transactions where account_id=$1 and to_char(transaction_date, 'YYYY-MM-DD') between $2 and $3 order by transaction_date desc",
                 [account_id, start_date, end_date]
             );
         } else {
