@@ -1,50 +1,40 @@
 import axios from 'axios';
-import { setAuthHeader, removeAuthHeader } from './common';
+import store from '../store/store';
+import { signIn } from '../actions/auth';
+import { addCSRFToken } from './common';
 
-export const get = async (
-    url,
-    params,
-    shouldSetAuthHeader = true,
-    shouldRemoveAuthHeader = false
-) => {
-    if (shouldSetAuthHeader) {
-        setAuthHeader();
+export const get = async (url, params) => {
+    try {
+        const token = await addCSRFToken();
+        axios.defaults.headers['X-CSRF-Token'] = token;
+        const result = await axios.get(url, params);
+        store.dispatch(signIn({ isAuthenticated: true }));
+        return result;
+    } catch (error) {
+        console.log(error);
     }
-    const result = await axios.get(url, params);
-    if (shouldRemoveAuthHeader) {
-        removeAuthHeader();
-    }
-    return result;
 };
 
-export const post = async (
-    url,
-    params,
-    shouldSetAuthHeader = true,
-    shouldRemoveAuthHeader = false
-) => {
-    if (shouldSetAuthHeader) {
-        setAuthHeader();
+export const post = async (url, params) => {
+    try {
+        const token = await addCSRFToken();
+        axios.defaults.headers['X-CSRF-Token'] = token;
+        const result = await axios.post(url, params);
+        store.dispatch(signIn({ isAuthenticated: true }));
+        return result;
+    } catch (error) {
+        console.log(error);
     }
-    const result = await axios.post(url, params);
-    if (shouldRemoveAuthHeader) {
-        removeAuthHeader();
-    }
-    return result;
 };
 
-export const patch = async (
-    url,
-    params,
-    shouldSetAuthHeader = true,
-    shouldRemoveAuthHeader = false
-) => {
-    if (shouldSetAuthHeader) {
-        setAuthHeader();
+export const patch = async (url, params) => {
+    try {
+        const token = await addCSRFToken();
+        axios.defaults.headers['X-CSRF-Token'] = token;
+        const result = await axios.patch(url, params);
+        store.dispatch(signIn({ isAuthenticated: true }));
+        return result;
+    } catch (error) {
+        console.log(error);
     }
-    const result = await axios.patch(url, params);
-    if (shouldRemoveAuthHeader) {
-        removeAuthHeader();
-    }
-    return result;
 };

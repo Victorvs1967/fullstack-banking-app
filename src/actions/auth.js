@@ -1,10 +1,8 @@
-import axios from 'axios';
 import { history } from '../router/AppRouter';
 import { BASE_API_URL, SIGN_IN, SIGN_OUT } from '../utils/constatnts';
 import { itnitiateGetProfile } from '../actions/profile';
 import { getErrors } from './errors';
 import { post } from '../utils/api';
-import { resetAccount } from './account';
 
 export const signIn = (user) => ({
     type: SIGN_IN,
@@ -14,9 +12,9 @@ export const signIn = (user) => ({
 export const initiateLogin = (email, password) => {
     return async (dispatch) => {
         try {
-            const result = await axios.post(`${BASE_API_URL}/signin`, { email, password });
+            const result = await post(`${BASE_API_URL}/signin`, { email, password });
             const user = result.data;
-            localStorage.setItem('user_token', user.token);
+            user.isAuthenticated = true;
             dispatch(signIn(user));
             dispatch(itnitiateGetProfile(user.email));
             history.push('/profile');
@@ -30,7 +28,7 @@ export const initiateLogin = (email, password) => {
 export const registerNewUser = (data) => {
     return async (dispatch) => {
         try {
-            await axios.post(`${BASE_API_URL}/signup`, data);
+            await post(`${BASE_API_URL}/signup`, data);
             return { success: true };
         } catch (error) {
             console.log('error', error);
@@ -49,7 +47,6 @@ export const initiateLogout = () => {
         try {
             await post(`${BASE_API_URL}/logout`, true, true);
             localStorage.removeItem('user_token');
-            dispatch(resetAccount());
             return dispatch(signOut());
         } catch (error) {
             error.response && dispatch(getErrors(error.response.data));
