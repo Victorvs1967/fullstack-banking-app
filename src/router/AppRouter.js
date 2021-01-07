@@ -4,6 +4,7 @@ import Login from '../components/Login';
 import Register from '../components/Register';
 import Profile from '../components/Profile';
 import Logout from '../components/Logout';
+import Account from '../components/Account';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 
@@ -16,6 +17,7 @@ const AppRouter = () => (
                 <Switch>
                     <PublicRoute path="/" component={Login} exact={true} />
                     <PublicRoute path="/register" component={Register} />
+                    <PrivateRoute path="/account" component={Account} />
                     <PrivateRoute path="/profile" component={Profile} />
                     <PrivateRoute path="/logout" component={Logout} />
                 </Switch>
