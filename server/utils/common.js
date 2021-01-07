@@ -65,9 +65,9 @@ const generatePdf = async filepath => {
     const pdfURL = path.join(filepath, 'transactions.pdf');
     await page.addStyleTag({
         content: `
-        .report-table { border-collapse: collapse; width:100%; }
-        .report-table td, th { border: 1px solid #ddd; padding: 10px; }
-        .report-table th { text-align: left; }
+            .report-table { border-collapse: collapse; width:100%; }
+            .report-table td, th { border: 1px solid #ddd; padding: 10px; }
+            .report-table th { text-align: left; }
         `
     });
         const pdf = await page.pdf({
