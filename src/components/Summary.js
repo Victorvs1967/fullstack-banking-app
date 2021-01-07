@@ -133,12 +133,12 @@ class Summary extends Component {
                 </Form>
 
                 {transactions.length > 0 ? (
-                    <div className="transaction-selection">
+                    <div className="transaction-selection" style={{textAlign: 'left'}}>
                         {isDownloading ? (
                             <p className="loading">Downloading...</p>
                         ) : (
                             <Fragment>
-                                <div className="main-info" style={{textAlign: 'left'}}>
+                                <div className="main-info">
                                     <p>Account number: { account_no }</p>
                                     <p>Bank name: { account.bank_name }</p>
                                     <p>IFSC code: { account.ifsc }</p>
