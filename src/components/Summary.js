@@ -23,6 +23,19 @@ class Summary extends Component {
         errorMsg: ''
     };
 
+    componentDidUpdate(prevProps) {
+        if (!_.isEqual(prevProps.transactions, this.props.transactions)) {
+            this.setState({
+                transactions: this.props.transactions
+            });
+        }
+        if (!_.isEqual(prevProps.errors, this.props.errors)) {
+            this.setState({
+                errorMsg: this.props.errors
+            });
+        }
+    }
+
     componentWillUnmount() {
         this.props.dispatch(resetErrors());
     }
@@ -83,7 +96,7 @@ class Summary extends Component {
         } = this.state;
         const account_no = account.account_no ? maskNumber(account.account_no) : '';
 
-        return account ? (
+        return account_no ? (
             <div className="summary-form">
                 <p>Transaction History</p>
                 {errorMsg && errorMsg.transactions_errpr && (
@@ -125,7 +138,7 @@ class Summary extends Component {
                             <p className="loading">Downloading...</p>
                         ) : (
                             <Fragment>
-                                <div className="main-info">
+                                <div className="main-info" style={{textAlign: 'left'}}>
                                     <p>Account number: { account_no }</p>
                                     <p>Bank name: { account.bank_name }</p>
                                     <p>IFSC code: { account.ifsc }</p>

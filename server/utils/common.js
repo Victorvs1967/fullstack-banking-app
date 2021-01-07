@@ -63,14 +63,14 @@ const generatePdf = async filepath => {
     await page.goto(`file:${path.join(filepath, 'transactions.html')}`, { waitUntil: 'networkidle2' });
     await page.setViewport({ width: 1680, height: 1050 });
     const pdfURL = path.join(filepath, 'transactions.pdf');
-    await page.addStyleTagTag({
+    await page.addStyleTag({
         content: `
-        .report-table { border-collapse: collapse; width: 100%; }
+        .report-table { border-collapse: collapse; width:100%; }
         .report-table td, th { border: 1px solid #ddd; padding: 10px; }
         .report-table th { text-align: left; }
         `
     });
-    const pdf = await page.pdf({
+        const pdf = await page.pdf({
         path: pdfURL,
         format: 'A4',
         printBackground: true,

@@ -79,7 +79,8 @@ export const downloadReport = (account_id, start_date, end_date) => {
                 `${BASE_API_URL}/download/${account_id}?start_date=${start_date}&end_date=${end_date}`,
                 { responseType: 'blob' }
             );
-            return download(result.data, 'transactions.pdf', 'application/pdf')
+            console.log(download(result.data, 'transactions.pdf', 'application/pdf'));
+            return download(result.data, 'transactions.pdf', 'application/pdf');
         } catch (error) {
             if (error.response && error.response.status === 400) {
                 dispatch(

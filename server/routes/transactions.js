@@ -123,12 +123,12 @@ Router.get('/download/:id', authMiddleware, async (req, res) => {
         const pdfSize = await generatePdf(basePath);
         res.set({
             'Content-Type': 'application/pdf',
-            'Content-Lrngth': pdfSize
+            'Content-Length': pdfSize
         });
         res.sendFile(path.join(basePath, 'transactions.pdf'));
     } catch (error) {
         res.status(400).send({
-            transactions_error: 'Error while downloading..Try agaon later.'
+            transactions_error: 'Error while downloading..Try agaon later...'
         });
     }
 });
