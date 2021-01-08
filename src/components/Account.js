@@ -42,7 +42,7 @@ class Account extends Component {
                 </div>
                 <div>
                     {selectedType === 'withdraw' || selectedType === 'deposit' ? (
-                        <AccountForm selectedType={selectedType} />
+                        <AccountForm selectedType={selectedType}  />
                     ) : (
                         <Summary />
                     )}
