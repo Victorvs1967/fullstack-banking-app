@@ -14,6 +14,7 @@ class Account extends Component {
     };
 
     render() {
+        console.log(this.props);
         const { selectedType } = this.state;
         return (
             <div>
@@ -52,4 +53,9 @@ class Account extends Component {
     }
 }
 
-export default connect()(Account);
+const mapStateToProps = state => ({
+    account: state.account,
+    errors: state.errors
+});
+
+export default connect(mapStateToProps)(Account);

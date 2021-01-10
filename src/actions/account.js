@@ -21,6 +21,7 @@ export const initiateGetAccntDetails = () => {
     return async (dispatch) => {
         try {
             const account = await get(`${BASE_API_URL}/account`);
+            console.log(account);
             return dispatch(setAccount(account.data));
         } catch (error) {
             error.response && dispatch(getErrors(error.response.data));
